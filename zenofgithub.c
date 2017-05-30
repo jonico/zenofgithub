@@ -12,4 +12,5 @@ int main() {
           "You're not in a git repo so the octocat will stay silent.",
           "Create a git repo and the Zen of GitHub will be revealed to you.");
     }
+    git_libgit2_shutdown();
 }
