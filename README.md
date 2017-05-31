@@ -137,6 +137,28 @@ If the :octocat: does not reveal a Zen of GitHub yet, you have to switch to a Gi
 ```
 git init
 ./zenofgithub
+
+               MMM.           .MMM
+               MMMMMMMMMMMMMMMMMMM
+               MMMMMMMMMMMMMMMMMMM      _______________________________________
+              MMMMMMMMMMMMMMMMMMMMM    |                                       |
+             MMMMMMMMMMMMMMMMMMMMMMM   | Non-blocking is better than blocking. |
+            MMMMMMMMMMMMMMMMMMMMMMMM   |_   ___________________________________|
+            MMMM::- -:::::::- -::MMMM    |/
+             MM~:~ 00~:::::~ 00~:~MM
+        .. MMMMM::.00:::+:::.00::MMMMM ..
+              .MM::::: ._. :::::MM.
+                 MMMM;:::::;MMMM
+          -MM        MMMMMMM
+          ^  M+     MMMMMMMMM
+              MMMMMMM MM MM MM
+                   MM MM MM MM
+                   MM MM MM MM
+                .~~MM~MM~MM~MM~~.
+             ~~~~MM:~MM~~~MM~:MM~~~~
+            ~~~~~~==~==~~~==~==~~~~~~
+             ~~~~~~==~==~==~==~~~~~~
+                 :~==~==~==~==~~
 ```
 
 Enjoy :octocat::heart:
