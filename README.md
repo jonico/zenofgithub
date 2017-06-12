@@ -68,8 +68,8 @@ conan.io takes care of the rest, downloads the dependencies from your conan.io r
 
 ## Basic setup
 
-First, [install](http://docs.conan.io/en/latest/installation.html) the conan.io package manager locally.
-Then, add the remote to [my conan.io repo](https://api.bintray.com/conan/conan-jonico/libzengithub) where the [ZenGithub](https://github.com/jonico/libzengithub) package is stored:
+First, [install](http://docs.conan.io/en/latest/installation.html) the conan package manager locally.
+Then, add the remote to my conan bintray repo where the [ZenGithub](https://github.com/jonico/libzengithub) package is stored:
 
 ```
 conan remote add conan-jonico https://api.bintray.com/conan/conan-jonico/libzengithub
