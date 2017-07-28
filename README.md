@@ -64,6 +64,15 @@ bzip2/1.0.6@lasote/stable
 
 conan.io takes care of the rest, downloads the dependencies from your conan.io remotes and if it cannot find appropriate binaries for your architecture, download the build recipe and build locally.
 
+If you look into [conanfile-semver.txt](https://github.com/jonico/zenofgithub/blob/master/conanfile-semver.txt), you can also see an example how you can use [semantic versioning](http://conanio.readthedocs.io/en/latest/mastering/version_ranges.html) while specifying your package dependencies:
+
+```
+[requires]
+ZenGitHub/[>0.9<1.2 || 0.8]@jonico/stable # In such range, OR’ing possible
+libgit2/0.24.2@paulobrizolara/stable # Exactly this version
+bzip2/[~=1.0]@lasote/stable # compatible, according to server
+```
+
 # Building the package
 
 ## Basic setup
