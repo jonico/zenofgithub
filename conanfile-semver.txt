@@ -1,0 +1,11 @@
+[requires]
+ZenGitHub/[>0.9<1.2 || 0.8]@jonico/stable # In such range, OR’ing possible
+libgit2/0.24.2@paulobrizolara/stable # Exactly this version
+bzip2/[~=1.0]@lasote/stable # compatible, according to server
+
+[generators]
+cmake
+
+[imports]
+bin, *.dll -> ./bin # Copies all dll files from packages bin folder to my "bin" folder
+lib, *.dylib* -> ./bin # Copies all dylib files from packages lib folder to my "bin" folder
