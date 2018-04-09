@@ -2,7 +2,6 @@
 ZenGitHub/1.0@jonico/stable
 libgit2/0.26.0@jonico/stable
 
-
 [generators]
 cmake
 

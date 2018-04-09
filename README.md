@@ -58,8 +58,7 @@ The only thing to consume all those dependencies is to have a [conanfile.txt](ht
 ```
 [requires]
 ZenGitHub/1.0@jonico/stable
-libgit2/0.24.2@paulobrizolara/stable
-bzip2/1.0.6@lasote/stable
+libgit2/0.26.0@jonico/stable
 ```
 
 conan.io takes care of the rest, downloads the dependencies from your conan.io remotes and if it cannot find appropriate binaries for your architecture, download the build recipe and build locally.
@@ -69,8 +68,7 @@ If you look into [conanfile-semver.txt](https://github.com/jonico/zenofgithub/bl
 ```
 [requires]
 ZenGitHub/[>0.9<1.2 || 0.8]@jonico/stable # In such range, OR’ing possible
-libgit2/0.24.2@paulobrizolara/stable # Exactly this version
-bzip2/[~=1.0]@lasote/stable # compatible, according to server
+libgit2/[~=0.26.0]@jonico/stable # Compatible according to semantic versioning
 ```
 
 # Building the package
