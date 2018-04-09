@@ -1,7 +1,6 @@
 [requires]
 ZenGitHub/1.0@jonico/stable
-libgit2/0.24.2@paulobrizolara/stable
-bzip2/1.0.6@lasote/stable
+libgit2/0.26.0@jonico/stable
 
 
 [generators]
