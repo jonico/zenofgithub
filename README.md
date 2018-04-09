@@ -51,7 +51,7 @@ This small demo application consumes a lot of packages, like [ZenGithub](https:/
 conan info . --graph deps.html
 open deps.html
 ```
-![image](https://cloud.githubusercontent.com/assets/1872314/26657792/e3e03c9c-461a-11e7-80d6-d4a2c1da2c5e.png)
+![image](https://user-images.githubusercontent.com/1872314/38521399-d34b0052-3c45-11e8-992b-7241793fe1a3.png)
 
 The only thing to consume all those dependencies is to have a [conanfile.txt](https://github.com/jonico/zenofgithub/blob/master/conanfile.txt) which is referencing the versions you want:
 
