@@ -1,4 +1,4 @@
-# zenofgithub - how to consume portable [conan.io](https://www.conan.io/) C/C++ packages, like [libzengithub](https://github.com/jonico/libzengithub), [libgit2](https://github.com/paulobrizolara/libgit2-conan) and [libcurl](https://github.com/lasote/conan-libcurl)
+# zenofgithub - how to consume portable [conan.io](https://www.conan.io/) C/C++ packages, like [libzengithub](https://github.com/jonico/libzengithub), [libgit2](https://github.com/paulobrizolara/libgit2-conan) and [libcurl](https://github.com/lasote/conan-libcurl) and build in multiple CIs
 
 ```zenofgithub``` is a small C application that prints out a random [Zen of Github](http://ben.balter.com/2015/08/12/the-zen-of-github/) whenever you call it from a directory that contains a Git repository:
 
