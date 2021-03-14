@@ -1,0 +1,79 @@
+# This is a basic workflow that is manually triggered
+
+name: summerwind/actions-runner-controller autoscaling demo
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+    inputs:
+      numberJobs:
+        description: 'Number of parallel jobs (should stay below 100)'
+        required: true
+        default: '24'
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  generate-matrix:
+    name: "Generate jobs for Zen of GitHub"
+    outputs:
+      matrix: ${{ steps.generate-matrix.outputs.matrix }}
+    runs-on: [ self-hosted ]
+    steps:
+      - name: generate-matrix
+        id: generate-matrix
+        run: echo "::set-output name=matrix::[`seq -s , ${{ github.event.inputs.numberJobs }}`]"
+    
+  reveal-zen-of-github-wisdom:
+    name: "Reveal ZenOfGitHub wisdom from matrix" 
+    runs-on: octodemo
+    timeout-minutes: 30
+    steps:
+      - name: Set proper cache permissions
+        run: sudo chown runner:runner /cache
+      - name: "Stream Zen of GitHub wisdom from shared cache"
+        run: |
+          echo "Looking forward to the wisdom of the Zen of GitHub ..." >> /cache/zenofgithub
+          tail -f /cache/zenofgithub
+  
+  zen-of-github-matrix:
+    # The type of runner that the job will run on
+    runs-on: octodemo
+    
+    needs: [generate-matrix]
+
+    strategy:
+      fail-fast: false
+      matrix:
+        job-number: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+    
+    env:
+        CONAN_USER_HOME: /cache/conan-user-home
+        CONAN_DOWNLOAD_CACHE: /cache/conan-download-cache
+        CONAN_REFERENCE: "ZenGitHub/1.0"
+        CONAN_USERNAME: "jonico"
+        CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }} 
+        CONAN_LOGIN_USERNAME: "jonico"
+        CONAN_CHANNEL: "stable"
+        CONAN_UPLOAD: "https://api.bintray.com/conan/conan-jonico/libzengithub"
+        CONAN_STABLE_BRANCH_PATTERN: "release/*"
+        CONAN_GCC_VERSIONS: 7
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Runs a single command using the runners shell
+    - name: Set proper cache permissions
+      run: sudo chown runner:runner /cache && mkdir -p $CONAN_USER_HOME && mkdir -p $CONAN_DOWNLOAD_CACHE
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Revealing ZenofGitHub wisdom #${{ matrix.job-number }}
+      run: |
+        conan user
+        conan config set storage.download_cache=$CONAN_DOWNLOAD_CACHE
+        mkdir build && cd build
+        conan remote add conan https://api.bintray.com/conan/conan-jonico/libzengithub || true
+        conan install .. --build=missing
+        cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
+        cmake --build .
+        cd bin/
+        git init
+        ./zenofgithub >> /cache/zenofgithub
