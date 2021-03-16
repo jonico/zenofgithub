@@ -1,0 +1,72 @@
+name: Manually triggered upstream workflow
+on:
+  workflow_dispatch:
+    inputs:
+      runner:
+        description: label this runner should run on
+        required: true
+        default: ubuntu-latest
+      matrix:
+        description: dimensions for the matrix build
+        required: true
+
+env:
+  CONAN_USER_HOME: /home/runner/conan-user-home
+  CONAN_DOWNLOAD_CACHE: /cache/conan-download-cache
+  CONAN_REFERENCE: "ZenGitHub/1.0"
+  CONAN_USERNAME: "jonico"
+  CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }} 
+  CONAN_LOGIN_USERNAME: "jonico"
+  CONAN_CHANNEL: "stable"
+  CONAN_UPLOAD: "https://api.bintray.com/conan/conan-jonico/libzengithub"
+  CONAN_STABLE_BRANCH_PATTERN: "release/*"
+  CONAN_GCC_VERSIONS: 7
+ 
+jobs:       
+  reveal-zen-of-github-wisdom:
+    name: "Reveal ZenOfGitHub wisdom from matrix" 
+    runs-on: ${{ github.event.inputs.runner }}
+    timeout-minutes: 30
+    steps:
+      - name: Set proper cache permissions
+        run: sudo chown runner:runner /cache
+      - name: "Stream Zen of GitHub wisdom from shared cache"
+        run: |
+          echo "Looking forward to the wisdom of the Zen of GitHub ..." > /cache/zenofgithub
+          tail -f /cache/zenofgithub
+  
+  clear-download-cache:
+    runs-on: ${{ github.event.inputs.runner }}
+    steps:
+    - name: Set proper cache permissions and clear cache
+      run: sudo chown runner:runner /cache && rm -rf /cache/$CONAN_DOWNLOAD_CACHE && rm /cache/zenofgithub
+
+  zen-of-github-matrix:
+    # The type of runner that the job will run on
+    runs-on: ${{ github.event.inputs.runner }}
+    needs: clear-download-cache
+
+    strategy:
+      fail-fast: false
+      matrix:
+        job-number: ${{ fromJson( github.event.inputs.matrix ) }}
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Runs a single command using the runners shell
+    - name: Set proper cache permissions
+      run: sudo chown runner:runner /cache && mkdir -p $CONAN_USER_HOME && mkdir -p $CONAN_DOWNLOAD_CACHE
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Revealing ZenofGitHub wisdom #${{ matrix.job-number }}
+      run: |
+        conan user
+        conan config set storage.download_cache=$CONAN_DOWNLOAD_CACHE
+        mkdir build && cd build
+        conan remote add conan https://api.bintray.com/conan/conan-jonico/libzengithub || true
+        conan install .. --build=missing
+        cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
+        cmake --build .
+        cd bin/
+        git init
+        ./zenofgithub >> /cache/zenofgithub
