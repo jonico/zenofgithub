@@ -1,0 +1,38 @@
+name: Downstream build example
+
+on:
+  workflow_dispatch:
+    inputs:
+      numberJobs:
+        description: 'Number of parallel jobs (should stay below 100)'
+        required: true
+        default: '24'
+      runner:
+        description: label for runner
+        required: true
+        default: 'octodemo'
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  generate-matrix:
+    name: "Generate jobs for Zen of GitHub"
+    runs-on: [ self-hosted ]
+    steps:
+      - name: generate-matrix
+        id: generate-matrix
+        run: echo "::set-output name=matrix::[`seq -s , ${{ github.event.inputs.numberJobs }}`]"
+      - name: Kicking off upstream build
+        uses: actions/github-script@v3.1.0
+        env:
+          runner: ${{ github.event.inputs.runner }}
+          matrix: ${{ steps.generate-matrix.outputs.matrix }}
+        with:
+          github-token: ${{secrets.TRIGGER_TOKEN}}
+          script: |
+            const { runner, matrix } = process.env;
+            github.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: "upstream-job.yaml",
+              ref: '${{github.ref}}',
+              inputs: { runner: runner, matrix: matrix }
+            });
