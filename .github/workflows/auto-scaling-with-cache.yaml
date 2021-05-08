@@ -70,7 +70,7 @@ jobs:
         conan user
         conan config set storage.download_cache=$CONAN_DOWNLOAD_CACHE
         mkdir build && cd build
-        conan remote add conan https://jonico.jfrog.io/artifactory/api/conan/libzengithub-conan-local || true
+        conan remote add conan https://jonico.jfrog.io/artifactory/api/conan/libzengithub-conan || true
         conan install .. --build=missing
         cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
         cmake --build .
