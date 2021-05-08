@@ -32,14 +32,14 @@ jobs:
         run: sudo chown runner:runner /cache
       - name: "Stream Zen of GitHub wisdom from shared cache"
         run: |
-          echo "Looking forward to the wisdom of the Zen of GitHub ..." > /cache/zenofgithub
+          echo "Looking forward to the wisdom of the Zen of GitHub ..." >> /cache/zenofgithub
           tail -f /cache/zenofgithub
   
   clear-download-cache:
     runs-on: ${{ github.event.inputs.runner }}
     steps:
     - name: Set proper cache permissions and clear cache
-      run: sudo chown runner:runner /cache && rm -rf /cache/$CONAN_DOWNLOAD_CACHE && rm /cache/zenofgithub
+      run: sudo chown runner:runner /cache && rm -rf /cache/$CONAN_DOWNLOAD_CACHE && rm /cache/zenofgithub || true
 
   zen-of-github-matrix:
     # The type of runner that the job will run on
@@ -62,8 +62,9 @@ jobs:
       run: |
         conan user
         conan config set storage.download_cache=$CONAN_DOWNLOAD_CACHE
+        conan config set general.revisions_enabled=1
         mkdir build && cd build
-        conan remote add conan https://jonico.jfrog.io/artifactory/api/conan/libzengithub-conan-local || true
+        conan remote add conan https://jonico.jfrog.io/artifactory/api/conan/libzengithub-conan || true
         conan install .. --build=missing
         cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
         cmake --build .
