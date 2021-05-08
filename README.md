@@ -79,7 +79,7 @@ First, [install](http://docs.conan.io/en/latest/installation.html) the conan pac
 Then, add the remote to my conan bintray repo where the [ZenGithub](https://github.com/jonico/libzengithub) package is stored:
 
 ```
-conan remote add conan-jonico https://api.bintray.com/conan/conan-jonico/libzengithub
+conan remote add conan-jonico https://jonico.jfrog.io/artifactory/api/conan/libzengithub-conan
 ```
 
 Then, clone this repository and cd into it:
