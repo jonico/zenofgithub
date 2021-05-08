@@ -70,4 +70,4 @@ jobs:
         cmake --build .
         cd bin/
         git init
-        ./zenofgithub >> /cache/zenofgithub
+        ./zenofgithub | tee -a /cache/zenofgithub
