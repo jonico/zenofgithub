@@ -61,13 +61,13 @@ jobs:
         conan remote add conan https://jonico.jfrog.io/artifactory/api/conan/libzengithub-conan || true
         conan install .. --build=missing
     - name: Build Unix
-      if: ${{ matrix.windows }} == false
+      if: matrix.windows == false
       run: |
         cd build
         cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
         cmake --build .
     - name: Build Windows
-      if: ${{ matrix.windows }} == true
+      if: matrix.windows == true
       run: |
         cd build
         cmake .. -G "Visual Studio 16 Win64"
