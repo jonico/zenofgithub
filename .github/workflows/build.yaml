@@ -39,6 +39,10 @@ jobs:
     # Runs a single command using the runners shell
     - name: Checkout
       uses: actions/checkout@v2
+    - name: Install conan
+      run: |
+        python3 -m pip install --upgrade pip
+        pip3 install conan
     - name: Revealing ZenofGitHub wisdom
       run: |
         conan user
