@@ -63,16 +63,18 @@ jobs:
     - name: Build Unix
       if: ${{ matrix.python-version }} == false
       run: |
+        cd build
         cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
         cmake --build .
     - name: Build Windows
       if: ${{ matrix.python-version }} == true
       run: |
+        cd build
         cmake .. -G "Visual Studio 16 Win64"
         cmake --build . --config Release
     - name: Reveal Zen of GitHub
       run: |
-        cd bin/
+        cd build/bin/
         ./zenofgithub
         git init
         ./zenofgithub
