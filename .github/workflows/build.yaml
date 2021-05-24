@@ -41,8 +41,8 @@ jobs:
       uses: actions/checkout@v2
     - name: Install conan
       run: |
-        python3 -m pip install --upgrade pip
-        pip3 install conan
+        python -m pip install --upgrade pip
+        pip install conan
     - name: Revealing ZenofGitHub wisdom
       run: |
         conan user
