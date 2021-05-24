@@ -61,7 +61,7 @@ jobs:
         conan remote add conan https://jonico.jfrog.io/artifactory/api/conan/libzengithub-conan || true
         conan install .. --build=missing
     - name: Build Unix
-      if: not windows
+      if: !windows
       run: |
         cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
         cmake --build .
