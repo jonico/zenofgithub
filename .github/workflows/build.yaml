@@ -39,6 +39,11 @@ jobs:
     # Runs a single command using the runners shell
     - name: Checkout
       uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+        architecture: ${{ matrix.python-arch }}
     - name: Install conan
       run: |
         python -m pip install --upgrade pip
