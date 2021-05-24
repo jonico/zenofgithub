@@ -1,0 +1,57 @@
+name: Build zenofgithub on main platforms
+on: [push]
+jobs:       
+  zen-of-github-matrix:
+    # The type of runner that the job will run on
+    runs-on:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macOS-10.15, windows-2019, ubuntu-16.04, ubuntu-20.04]
+        include:
+          - os: ubuntu-16.04
+            python-arch: "x64"
+            python-version: "3.6.x" 
+            install-headerfiles: true
+            prepare-python: true
+            gcc-version: "5"
+          - os: ubuntu-20.04
+            python-arch: "x64"
+            python-version: "3.6.x" 
+            install-headerfiles: true
+            prepare-python: true
+            gcc-version: "9"
+          - os: macOS-10.15
+            python-arch: "x64"
+            python-version: "3.6.x" 
+            install-headerfiles: false
+            prepare-python: true
+          - os: windows-2019
+            vs-version: 16
+            python-arch: "x86"
+            python-version: "3.6.x" 
+            install-headerfiles: false
+            prepare-python: true
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Runs a single command using the runners shell
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Revealing ZenofGitHub wisdom
+      run: |
+        conan user
+        conan config set general.revisions_enabled=1
+        mkdir build && cd build
+        conan remote add conan https://jonico.jfrog.io/artifactory/api/conan/libzengithub-conan || true
+        conan install .. --build=missing
+        cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
+        cmake --build .
+        cd bin/
+        git init
+        ./zenofgithub
