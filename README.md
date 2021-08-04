@@ -1,4 +1,4 @@
-# zenofgithub - how to consume portable [conan.io](https://www.conan.io/) C/C++ packages, like [libzengithub](https://github.com/jonico/libzengithub), [libgit2](https://github.com/paulobrizolara/libgit2-conan) and [libcurl](https://github.com/lasote/conan-libcurl) and build in multiple CIs
+# zenofgithub - how to consume portable [conan.io](https://www.conan.io/) C/C++ packages, like [libzengithub](https://github.com/jonico/libzengithub), [libgit2](https://github.com/paulobrizolara/libgit2-conan) and [libcurl](https://github.com/lasote/conan-libcurl) and build on multiple platforms
 
 [![Build zenofgithub on main platforms](https://github.com/jonico/zenofgithub/actions/workflows/build.yaml/badge.svg)](https://github.com/jonico/zenofgithub/actions/workflows/build.yaml)
 
